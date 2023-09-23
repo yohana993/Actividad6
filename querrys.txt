@@ -1,0 +1,63 @@
+1.
+SELECT ID FROM Cliente WHERE Direccion LIKE '%Monterrey%';
+2.
+SELECT ID, Descripcion FROM Producto WHERE Precio < 15;
+3.
+SELECT C.ID, C.Nombre, DV.Cantidad, P.Descripcion
+FROM Cliente C
+JOIN Venta V ON C.ID = V.ClienteID
+JOIN DetalleVenta DV ON V.ID = DV.VentaID
+JOIN Producto P ON DV.ProductoID = P.ID
+WHERE DV.Cantidad > 10;
+4.
+SELECT C.ID, C.Nombre
+FROM Cliente C
+LEFT JOIN Venta V ON C.ID = V.ClienteID
+WHERE V.ID IS NULL;
+5.
+SELECT C.ID, C.Nombre
+FROM Cliente C
+WHERE NOT EXISTS (
+  SELECT P.ID
+  FROM Producto P
+  WHERE NOT EXISTS (
+    SELECT DV.ProductoID
+    FROM DetalleVenta DV
+    WHERE DV.ProductoID = P.ID
+      AND DV.VentaID IN (SELECT V.ID FROM Venta V WHERE V.ClienteID = C.ID)
+  )
+);
+6.
+SELECT C.ID, C.Nombre, SUM(DV.Cantidad) AS SumaTotal
+FROM Cliente C
+JOIN Venta V ON C.ID = V.ClienteID
+JOIN DetalleVenta DV ON V.ID = DV.VentaID
+GROUP BY C.ID, C.Nombre;
+7.
+SELECT P.ID
+FROM Producto P
+WHERE NOT EXISTS (
+  SELECT DV.ProductoID
+  FROM DetalleVenta DV
+  WHERE DV.ProductoID = P.ID
+    AND DV.VentaID IN (SELECT V.ID FROM Venta V JOIN Cliente C ON V.ClienteID = C.ID WHERE C.Direccion LIKE '%Guadalajara%')
+);
+8.
+SELECT DISTINCT C.Direccion
+FROM Cliente C
+WHERE NOT EXISTS (
+  SELECT P.ID
+  FROM Producto P
+  WHERE NOT EXISTS (
+    SELECT DV.ProductoID
+    FROM DetalleVenta DV
+    WHERE DV.ProductoID = P.ID
+      AND DV.VentaID IN (SELECT V.ID FROM Venta V WHERE V.ClienteID = C.ID)
+  )
+);
+Estas son las consultas SQL que puedes utilizar en tu base de datos PostgreSQL para obtener la información requerida. Asegúrate de que tus tablas estén pobladas
+
+
+
+
+

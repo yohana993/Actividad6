@@ -1,0 +1,15 @@
+
+INSERT INTO Cliente (Nombre, Apellidos, Email, Telefono, Direccion, CodigoPostal, BarrioColonia)
+VALUES ('Juan', 'Perez', 'juan@example.com', '555-123-4567', 'Calle 123', '12345', 'Colonia A');
+
+
+INSERT INTO Producto (Nombre, Descripcion, Precio, SKU)
+VALUES ('Arroz', 'Arroz de grano largo', 10.99, 'SKU123');
+
+
+INSERT INTO Venta (Fecha, ClienteID, Total)
+VALUES ('2023-09-15', 1, 30.99);
+
+
+INSERT INTO DetalleVenta (VentaID, ProductoID, Cantidad)
+VALUES (1, 1, 2);  -- Se vendieron 2 unidades del producto 1 en la venta 1

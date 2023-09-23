@@ -1,0 +1,35 @@
+CREATE TABLE Cliente (
+  ID SERIAL PRIMARY KEY,
+  Nombre VARCHAR(50),
+  Apellidos VARCHAR(50),
+  Email VARCHAR(100),
+  Telefono VARCHAR(15),
+  Direccion VARCHAR(100),
+  CodigoPostal VARCHAR(10),
+  BarrioColonia VARCHAR(50)
+);
+
+CREATE TABLE Producto (
+  ID SERIAL PRIMARY KEY,
+  Nombre VARCHAR(100),
+  Descripcion TEXT,
+  Precio DECIMAL(10, 2),
+  SKU VARCHAR(20)
+);
+
+CREATE TABLE Venta (
+  ID SERIAL PRIMARY KEY,
+  Fecha DATE,
+  ClienteID INT,
+  Total DECIMAL(10, 2),
+  FOREIGN KEY (ClienteID) REFERENCES Cliente(ID)
+);
+
+CREATE TABLE DetalleVenta (
+  VentaID INT,
+  ProductoID INT,
+  Cantidad INT,
+  PRIMARY KEY (VentaID, ProductoID),
+  FOREIGN KEY (VentaID) REFERENCES Venta(ID),
+  FOREIGN KEY (ProductoID) REFERENCES Producto(ID)
+);
